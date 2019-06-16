@@ -1,0 +1,15 @@
+[package]
+name = "oddsketch"
+version = "0.1.0"
+authors = ["Harry Barber <hlbarber93@gmail.com>"]
+edition = "2018"
+
+[dependencies]
+
+[dev-dependencies]
+criterion = "*"
+rand = "*"
+
+[[bench]]
+name = "oddsketch"
+harness = false
