@@ -34,9 +34,7 @@ fn bench_insert_million(c: &mut Criterion) {
             },
             // Loop
             |(mut oddsketch, inputs)| {
-                for i in inputs {
-                    oddsketch.insert(black_box(i))
-                }
+               oddsketch.insert_batch(&inputs)
             },
             BatchSize::SmallInput,
         )
