@@ -7,6 +7,11 @@ pub struct Oddsketch([u8; DEFAULT_LEN]);
 
 impl Oddsketch {
     #[inline]
+    pub fn new(raw: [u8; DEFAULT_LEN]) -> Oddsketch {
+        Oddsketch(raw)
+    }
+
+    #[inline]
     pub fn insert(&mut self, short_id: u64) {
         let os_index = (short_id % (DEFAULT_LEN as u64 * 8)) as usize;
         self.0[os_index / 8] ^= 1 << (os_index % 8);
