@@ -1,6 +1,6 @@
 use std::ops::{BitXor, BitXorAssign, Deref, DerefMut};
 
-const DEFAULT_LEN: usize = 256;
+pub const DEFAULT_LEN: usize = 256;
 
 #[derive(Clone)]
 pub struct Oddsketch([u8; DEFAULT_LEN]);
