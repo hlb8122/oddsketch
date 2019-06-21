@@ -35,11 +35,21 @@ impl Oddsketch {
     }
 
     #[inline]
-    pub fn size(&self) -> u32 {
+    pub fn size_alt(&self) -> u32 {
         let length = 8. * (DEFAULT_LEN as f64);
         let weight = f64::from(self.hamming_weight());
 
         let size_approx = f64::ln(1. - 2. * weight / length) / f64::ln(1. - 2. / length);
+
+        size_approx as u32
+    }
+
+    #[inline]
+    pub fn size(&self) -> u32 {
+        let length = 8. * (DEFAULT_LEN as f64);
+        let weight = f64::from(self.hamming_weight());
+
+        let size_approx = -length / 2.  * f64::ln(1. - 2. * weight / length);
 
         size_approx as u32
     }
