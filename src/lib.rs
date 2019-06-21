@@ -33,6 +33,16 @@ impl Oddsketch {
     pub fn hamming_weight(&self) -> u32 {
         self.iter().map(|b| b.count_ones()).sum()
     }
+    
+    #[inline]
+    pub fn size(&self) -> u32 {
+        let length = 8. * (DEFAULT_LEN as f64);
+        let weight = f64::from(self.hamming_weight());
+
+        let size_approx = -length / 2.  * f64::ln(1. - 2. * weight / length);
+
+        size_approx as u32
+    }
 
     #[inline]
     pub fn size_alt(&self) -> u32 {
@@ -40,16 +50,6 @@ impl Oddsketch {
         let weight = f64::from(self.hamming_weight());
 
         let size_approx = f64::ln(1. - 2. * weight / length) / f64::ln(1. - 2. / length);
-
-        size_approx as u32
-    }
-
-    #[inline]
-    pub fn size(&self) -> u32 {
-        let length = 8. * (DEFAULT_LEN as f64);
-        let weight = f64::from(self.hamming_weight());
-
-        let size_approx = -length / 2.  * f64::ln(1. - 2. * weight / length);
 
         size_approx as u32
     }
@@ -69,7 +69,7 @@ impl BitXor for Oddsketch {
     fn bitxor(self, rhs: Self) -> Self::Output {
         let mut out = [0; DEFAULT_LEN];
         for (i, item) in out.iter_mut().enumerate() {
-            *item ^= rhs.0[i];
+            *item = self.0[i] ^ rhs.0[i];
         }
 
         Oddsketch(out)
