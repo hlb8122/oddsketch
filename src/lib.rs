@@ -1,4 +1,4 @@
-use std::ops::{BitXor, BitXorAssign, Deref, DerefMut};
+use core::ops::{BitXor, BitXorAssign, Deref, DerefMut};
 
 pub const DEFAULT_LEN: usize = 256;
 
@@ -33,13 +33,13 @@ impl Oddsketch {
     pub fn hamming_weight(&self) -> u32 {
         self.iter().map(|b| b.count_ones()).sum()
     }
-    
+
     #[inline]
     pub fn size(&self) -> u32 {
         let length = 8. * (DEFAULT_LEN as f64);
         let weight = f64::from(self.hamming_weight());
 
-        let size_approx = -length / 2.  * f64::ln(1. - 2. * weight / length);
+        let size_approx = -length / 2. * f64::ln(1. - 2. * weight / length);
 
         size_approx as u32
     }
@@ -57,7 +57,7 @@ impl Oddsketch {
     pub fn fold(self, size: usize) -> Vec<u8> {
         let chunk_size = DEFAULT_LEN / size;
         self.chunks(chunk_size)
-            .map(|chunk| chunk.into_iter().fold(0, |acc, x| acc ^ x))
+            .map(|chunk| chunk.iter().fold(0, |acc, x| acc ^ x))
             .collect()
     }
 }

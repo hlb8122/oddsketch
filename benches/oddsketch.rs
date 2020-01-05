@@ -33,9 +33,7 @@ fn bench_insert_million(c: &mut Criterion) {
                 (random_oddsketch(), inputs)
             },
             // Loop
-            |(mut oddsketch, inputs)| {
-               oddsketch.insert_batch(&inputs)
-            },
+            |(mut oddsketch, inputs)| oddsketch.insert_batch(&inputs),
             BatchSize::SmallInput,
         )
     });

@@ -7,8 +7,8 @@ edition = "2018"
 [dependencies]
 
 [dev-dependencies]
-criterion = "*"
-rand = "*"
+criterion = "0.3.0"
+rand = "0.7.2"
 
 [[bench]]
 name = "oddsketch"
