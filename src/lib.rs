@@ -23,6 +23,11 @@ impl Oddsketch {
     }
 
     #[inline]
+    pub fn to_vec(self) -> Vec<u8> {
+        self.0
+    }
+
+    #[inline]
     pub fn is_empty(&self) -> bool {
         self.iter().all(|x| *x == 0)
     }
