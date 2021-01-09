@@ -41,20 +41,20 @@ impl<const LEN: usize> Oddsketch<{LEN}> {
 
     #[inline]
     pub fn size(&self) -> u32 {
-        let LEN = 8. * (LEN as f64);
+        let len = 8. * (LEN as f64);
         let weight = f64::from(self.hamming_weight());
 
-        let size_approx = -LEN / 2.  * f64::ln(1. - 2. * weight / LEN);
+        let size_approx = -len / 2.  * f64::ln(1. - 2. * weight / len);
 
         size_approx as u32
     }
 
     #[inline]
     pub fn size_alt(&self) -> u32 {
-        let LEN = 8. * (LEN as f64);
+        let len = 8. * (LEN as f64);
         let weight = f64::from(self.hamming_weight());
 
-        let size_approx = f64::ln(1. - 2. * weight / LEN) / f64::ln(1. - 2. / LEN);
+        let size_approx = f64::ln(1. - 2. * weight / len) / f64::ln(1. - 2. / len);
 
         size_approx as u32
     }
@@ -72,7 +72,7 @@ impl<const LEN: usize> BitXor for Oddsketch<{LEN}> {
 
     #[inline]
     fn bitxor(self, rhs: Self) -> Self::Output {
-        let mut out = [0; std::mem::size_of::<Self>()];
+        let mut out = [0; LEN];
         for (i, item) in out.iter_mut().enumerate() {
             *item = self.0[i] ^ rhs.0[i];
         }
