@@ -3,7 +3,7 @@ use std::ops::{BitXor, BitXorAssign, Deref, DerefMut};
 #[derive(Clone)]
 pub struct Oddsketch<const LEN: usize>([u8; LEN]);
 
-impl<const LEN: usize> Oddsketch<{LEN}> {
+impl<const LEN: usize> Oddsketch<{ LEN }> {
     #[inline]
     pub fn new(raw: [u8; LEN]) -> Self {
         Oddsketch(raw)
@@ -42,7 +42,7 @@ impl<const LEN: usize> Oddsketch<{LEN}> {
         let len = 8. * (LEN as f64);
         let weight = f64::from(self.hamming_weight());
 
-        let size_approx = -len / 2.  * f64::ln(1. - 2. * weight / len);
+        let size_approx = -len / 2. * f64::ln(1. - 2. * weight / len);
 
         size_approx as u32
     }
@@ -65,7 +65,7 @@ impl<const LEN: usize> Oddsketch<{LEN}> {
     }
 }
 
-impl<const LEN: usize> BitXor for Oddsketch<{LEN}> {
+impl<const LEN: usize> BitXor for Oddsketch<{ LEN }> {
     type Output = Self;
 
     #[inline]
@@ -79,7 +79,7 @@ impl<const LEN: usize> BitXor for Oddsketch<{LEN}> {
     }
 }
 
-impl<const LEN: usize> BitXorAssign for Oddsketch<{LEN}> {
+impl<const LEN: usize> BitXorAssign for Oddsketch<{ LEN }> {
     #[inline]
     fn bitxor_assign(&mut self, rhs: Self) {
         for (i, item) in self.iter_mut().enumerate() {
@@ -88,14 +88,14 @@ impl<const LEN: usize> BitXorAssign for Oddsketch<{LEN}> {
     }
 }
 
-impl<const LEN: usize> Default for Oddsketch<{LEN}> {
+impl<const LEN: usize> Default for Oddsketch<{ LEN }> {
     #[inline]
     fn default() -> Self {
         Oddsketch([0; LEN])
     }
 }
 
-impl<const LEN: usize> Deref for Oddsketch<{LEN}> {
+impl<const LEN: usize> Deref for Oddsketch<{ LEN }> {
     type Target = [u8; LEN];
 
     #[inline]
@@ -104,7 +104,7 @@ impl<const LEN: usize> Deref for Oddsketch<{LEN}> {
     }
 }
 
-impl<const LEN: usize> DerefMut for Oddsketch<{LEN}> {
+impl<const LEN: usize> DerefMut for Oddsketch<{ LEN }> {
     #[inline]
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.0

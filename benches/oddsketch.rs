@@ -33,9 +33,7 @@ fn bench_insert_million(c: &mut Criterion) {
                 (random_oddsketch(), inputs)
             },
             // Loop
-            |(mut oddsketch, inputs): (Oddsketch<32>, _)| {
-               oddsketch.insert_batch(&inputs)
-            },
+            |(mut oddsketch, inputs): (Oddsketch<32>, _)| oddsketch.insert_batch(&inputs),
             BatchSize::SmallInput,
         )
     });
@@ -47,7 +45,9 @@ fn bench_decode(c: &mut Criterion) {
             // Setup
             || (random_oddsketch(), random_oddsketch()),
             // Function
-            |(oddsketch_a, oddsketch_b): (Oddsketch<32>, _)| (black_box(oddsketch_a) ^ black_box(oddsketch_b)).size(),
+            |(oddsketch_a, oddsketch_b): (Oddsketch<32>, _)| {
+                (black_box(oddsketch_a) ^ black_box(oddsketch_b)).size()
+            },
             BatchSize::SmallInput,
         )
     });
