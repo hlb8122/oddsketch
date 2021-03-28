@@ -24,7 +24,7 @@ impl<const LEN: usize> Oddsketch<{ LEN }> {
 
     #[inline]
     pub fn to_vec(self) -> Vec<u8> {
-        self.0
+        self.0.to_vec()
     }
 
     #[inline]
