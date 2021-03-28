@@ -2,7 +2,7 @@ use criterion::*;
 use oddsketch::Oddsketch;
 use rand::Rng;
 
-fn random_oddsketch() -> Oddsketch {
+fn random_oddsketch<const LEN: usize>() -> Oddsketch<LEN> {
     let mut rng = rand::thread_rng();
     let mut oddsketch = Oddsketch::default();
 
@@ -18,7 +18,7 @@ fn bench_insert_single(c: &mut Criterion) {
             // Setup
             || (random_oddsketch(), rand::thread_rng().gen()),
             // Loop
-            |(mut oddsketch, i)| oddsketch.insert(black_box(i)),
+            |(mut oddsketch, i): (Oddsketch<32>, _)| oddsketch.insert(black_box(i)),
             BatchSize::SmallInput,
         )
     });
@@ -33,7 +33,7 @@ fn bench_insert_million(c: &mut Criterion) {
                 (random_oddsketch(), inputs)
             },
             // Loop
-            |(mut oddsketch, inputs)| oddsketch.insert_batch(&inputs),
+            |(mut oddsketch, inputs): (Oddsketch<32>, _)| oddsketch.insert_batch(&inputs),
             BatchSize::SmallInput,
         )
     });
@@ -45,7 +45,9 @@ fn bench_decode(c: &mut Criterion) {
             // Setup
             || (random_oddsketch(), random_oddsketch()),
             // Function
-            |(oddsketch_a, oddsketch_b)| (black_box(oddsketch_a) ^ black_box(oddsketch_b)).size(),
+            |(oddsketch_a, oddsketch_b): (Oddsketch<32>, _)| {
+                (black_box(oddsketch_a) ^ black_box(oddsketch_b)).size()
+            },
             BatchSize::SmallInput,
         )
     });
