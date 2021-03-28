@@ -1,5 +1,3 @@
-#![feature(const_generics)]
-
 use std::ops::{BitXor, BitXorAssign, Deref, DerefMut};
 
 #[derive(Clone)]
